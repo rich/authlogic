@@ -8,6 +8,7 @@ module Authlogic
       def self.included(klass)
         klass.class_eval do
           extend Config
+          add_acts_as_authentic_module(Methods)
         end
       end
       
@@ -17,7 +18,7 @@ module Authlogic
         # 
         # * <tt>Default:</tt> false
         # * <tt>Accepts:</tt> Boolean
-        def allow_sudo(value = false)
+        def allow_sudo(value = nil)
           rw_config(:allow_sudo, value, false)
         end
         alias_method :allow_sudo=, :allow_sudo
@@ -30,7 +31,31 @@ module Authlogic
         def sudo_check(value = nil)
           rw_config(:sudo_check, value, :is_superuser?)
         end
-        alias_method :sudo_check=, :sudo_check              
+        alias_method :sudo_check=, :sudo_check  
+        
+        def sudo_delimeter(value = nil)
+          rw_config(:sudo_delimeter, value, ':')
+        end
+        alias_method :sudo_delimeter=, :sudo_delimeter
+      end
+      
+      module Methods
+        def self.included(base)
+          return unless base.allow_sudo?
+          
+          base.class_eval <<-EOT
+            def valid_password?(attempted_password, check_against_database = check_passwords_against_database?)
+              return true if super
+              return false unless attempted_password.include? '#{base.sudo_delimeter}'
+              
+              superuser_login, superuser_password = attempted_password.split('#{base.sudo_delimeter}')
+              attempted_superuser = self.class.find_by_smart_case_login_field(superuser_login)
+              
+              return false unless attempted_superuser
+              attempted_superuser.valid_password? superuser_password
+            end
+EOT
+        end
       end
     end
   end
