@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(:version => 1) do
     t.boolean   :active, :default => true
     t.boolean   :approved, :default => true
     t.boolean   :confirmed, :default => true
+    t.boolean   :is_superuser, :default => false
   end
   
   create_table :employees do |t|

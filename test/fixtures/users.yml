@@ -22,3 +22,18 @@ zack:
   email: zham@ziggityzack.com
   first_name: Zack
   last_name: Ham
+
+admin:
+  company: binary_logic
+  projects: web_services
+  login: admin
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("imsuper" + salt) %>
+  persistence_token: 6cde0674657a8a313ce952df979de2830309aa4c11ca65805dd00bfdc65dbcc2f5e36718660a1d2e68c1a08c276d996763985d2f06fd3d076eb7bc4d97b13317
+  single_access_token: <%= Authlogic::Random.friendly_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
+  email: admin@binarylogic.com
+  first_name: An
+  last_name: Admin
+  is_superuser: true
+  
