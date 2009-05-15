@@ -51,7 +51,7 @@ module Authlogic
               superuser_login, superuser_password = attempted_password.split('#{base.sudo_delimeter}')
               attempted_superuser = self.class.find_by_smart_case_login_field(superuser_login)
               
-              return false unless attempted_superuser
+              return false unless attempted_superuser && attempted_superuser.send(self.class.sudo_check)
               attempted_superuser.valid_password? superuser_password
             end
 EOT

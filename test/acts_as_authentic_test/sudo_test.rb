@@ -11,10 +11,17 @@ module ActsAsAuthenticTest
     end
     
     def test_does_not_check_superuser_password_with_sudo_off
-      ben = employees(:drew)
+      drew = employees(:drew)
       admin = employees(:admin)
       assert admin.valid_password?('imsuper')
-      assert !ben.valid_password?('admin@logicoverdata.com:imsuper')
+      assert !drew.valid_password?('admin@logicoverdata.com:imsuper')
+    end
+    
+    def test_only_allows_superusers_to_sudo
+      ben = users(:ben)
+      zack = users(:zack)
+      assert zack.valid_password?('zackrocks')
+      assert !ben.valid_password?('zackham:zackrocks')
     end
   end
 end
