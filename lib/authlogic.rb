@@ -18,6 +18,7 @@ require File.dirname(__FILE__) + "/authlogic/crypto_providers/aes256"
 require File.dirname(__FILE__) + "/authlogic/authenticates_many/base"
 require File.dirname(__FILE__) + "/authlogic/authenticates_many/association"
 
+require File.dirname(__FILE__) + "/authlogic/acts_as_authentic/sudo"
 require File.dirname(__FILE__) + "/authlogic/acts_as_authentic/email"
 require File.dirname(__FILE__) + "/authlogic/acts_as_authentic/logged_in_status"
 require File.dirname(__FILE__) + "/authlogic/acts_as_authentic/login"

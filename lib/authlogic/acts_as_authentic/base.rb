@@ -100,6 +100,7 @@ if defined?(::ActiveRecord)
       include Authlogic::ActsAsAuthentic::SessionMaintenance
       include Authlogic::ActsAsAuthentic::SingleAccessToken
       include Authlogic::ActsAsAuthentic::ValidationsScope
+      include Authlogic::ActsAsAuthentic::Sudo
     end
   end
 end
