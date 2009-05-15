@@ -15,3 +15,12 @@ jennifer:
   persistence_token: 2be52a8f741ad00056e6f94eb6844d5316527206da7a3a5e3d0e14d19499ef9fe4c47c89b87febb59a2b41a69edfb4733b6b79302040f3de83f297c6991c75a2
   first_name: Jennifer
   last_name: Johnson
+
+admin:
+  company: logic_over_data
+  email: admin@logicoverdata.com
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: '<%= Employee.crypto_provider.encrypt("imsuper" + salt) %>'
+  persistence_token: 2be52a8f741ad00056e6f94eb6844d5316527206da7a3a5e3d0e14d19499ef9fe4c47c89b87febb59a2b41a69edfb4733b6b79302040f3de83f297c6991fd5a2
+  first_name: An
+  last_name: Admin
